@@ -1,4 +1,20 @@
 package org.solrmarc.index;
+/**
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 import java.io.File;
 import java.io.FileReader;
@@ -32,8 +48,7 @@ import org.marc4j.marc.Subfield;
 import org.marc4j.marc.VariableField;
 import org.solrmarc.callnum.DeweyCallNumber;
 import org.solrmarc.callnum.LCCallNumber;
-import org.solrmarc.callnum.CallNumUtils;
-import org.solrmarc.tools.PropertyUtils;
+import org.solrmarc.tools.CallNumUtils;
 import org.solrmarc.tools.SolrMarcIndexerException;
 import org.solrmarc.tools.Utils;
 import org.ini4j.Ini;
@@ -76,19 +91,16 @@ public class VuFindIndexer extends SolrIndexer
      * @param propertyDirs array of directories holding properties files
      * @throws Exception if {@code SolrIndexer} constructor threw an exception.
      */
-//    public VuFindIndexer(final String propertiesMapFile, final String[] propertyDirs)
-//            throws FileNotFoundException, IOException, ParseException {
-//        super(propertiesMapFile, propertyDirs);
-//        try {
-//            vuFindConfigs = Utils.loadProperties(propertyDirs, "vufind.properties");
-//        } catch (IllegalArgumentException e) {
-//            // If the properties load failed, don't worry about it -- we'll use defaults.
-//        }
-//    }
-    public VuFindIndexer()
-    {
+    public VuFindIndexer(final String propertiesMapFile, final String[] propertyDirs)
+            throws FileNotFoundException, IOException, ParseException {
+        super(propertiesMapFile, propertyDirs);
+        try {
+            vuFindConfigs = Utils.loadProperties(propertyDirs, "vufind.properties");
+        } catch (IllegalArgumentException e) {
+            // If the properties load failed, don't worry about it -- we'll use defaults.
+        }
     }
-    
+
     /**
      * Log an error message and throw a fatal exception.
      * @param msg message to log
@@ -118,7 +130,7 @@ public class VuFindIndexer extends SolrIndexer
 
         // Get the relative VuFind path from the properties file, defaulting to
         // the 2.0-style config/vufind if necessary.
-        String relativeConfigPath = PropertyUtils.getProperty(
+        String relativeConfigPath = Utils.getProperty(
             vuFindConfigs, "vufind.config.relative_path", "config/vufind"
         );
 
@@ -1103,7 +1115,7 @@ public class VuFindIndexer extends SolrIndexer
      * @return sortable shelf key of the first valid LC number encountered, 
      *         otherwise shelf key of the first call number found.
      */
-    public String getLCSortable(Record record, String fieldSpec) {
+    public static String getLCSortable(Record record, String fieldSpec) {
         // Loop through the specified MARC fields:
         Set<String> input = getFieldList(record, fieldSpec);
         String firstCall = "";
@@ -1134,7 +1146,7 @@ public class VuFindIndexer extends SolrIndexer
      * @param callType  literal call number code
      * @return sort key for first identified LC call number
      */
-    public String getLCSortableByType(
+    public static String getLCSortableByType(
             Record record, String fieldSpec, String callTypeSf, String callType) {
         String sortKey = null;
         for (String tag : fieldSpec.split(":")) {
@@ -1869,12 +1881,12 @@ public class VuFindIndexer extends SolrIndexer
                 //add all author types to the result set
                 if (authorHasAppropriateRelator(authorField, noRelatorAllowed, relatorConfig)) {
                     for (String subfields : parsedTagList.get(authorField.getTag())) {
-                        String current = super.getDataFromVariableField(authorField, "["+subfields+"]", " ", false);
+                        String current = this.getDataFromVariableField(authorField, "["+subfields+"]", " ", false);
                         // TODO: we may eventually be able to use this line instead,
                         // but right now it's not handling separation between the
                         // subfields correctly, so it's commented out until that is
                         // fixed.
-                       // String current = authorField.getSubfieldsAsString(subfields);
+                        //String current = authorField.getSubfieldsAsString(subfields);
                         if (null != current) {
                             result.add(current);
                             if (firstOnly) {
