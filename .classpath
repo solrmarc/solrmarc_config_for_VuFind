@@ -1,19 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="index_java/src"/>
-	<classpathentry kind="lib" path="lib-solrj-5.5.0/commons-io-2.4.jar"/>
-	<classpathentry kind="lib" path="lib-solrj-5.5.0/httpclient-4.4.1.jar"/>
-	<classpathentry kind="lib" path="lib-solrj-5.5.0/httpcore-4.4.1.jar"/>
-	<classpathentry kind="lib" path="lib-solrj-5.5.0/httpmime-4.4.1.jar"/>
-	<classpathentry kind="lib" path="lib-solrj-5.5.0/jcl-over-slf4j-1.7.7.jar"/>
-	<classpathentry kind="lib" path="lib-solrj-5.5.0/noggit-0.6.jar"/>
-	<classpathentry kind="lib" path="lib-solrj-5.5.0/slf4j-api-1.7.7.jar"/>
-	<classpathentry kind="lib" path="lib-solrj-5.5.0/solr-solrj-5.5.0.jar"/>
-	<classpathentry kind="lib" path="lib-solrj-5.5.0/stax2-api-3.1.4.jar"/>
-	<classpathentry kind="lib" path="lib-solrj-5.5.0/woodstox-core-asl-4.4.1.jar"/>
-	<classpathentry kind="lib" path="lib-solrj-5.5.0/zookeeper-3.4.6.jar"/>
 	<classpathentry kind="lib" path="lib/bsh-2.0b5.jar"/>
-	<classpathentry kind="lib" path="lib/fast-classpath-scanner-java7-1.90.7.jar"/>
 	<classpathentry kind="lib" path="lib/ini4j-0.5.2-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/java-cup-11b-runtime.jar"/>
 	<classpathentry kind="lib" path="lib/jopt-simple-5.0.2.jar"/>
@@ -24,6 +12,7 @@
 	<classpathentry kind="lib" path="lib/postgresql-9.1-902.jdbc4.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.7.16.jar"/>
 	<classpathentry kind="lib" path="solrmarc_core.jar"/>
+	<classpathentry kind="lib" path="lib/fast-classpath-scanner-1.91.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="index_java/bin"/>
 </classpath>

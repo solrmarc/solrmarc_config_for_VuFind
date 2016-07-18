@@ -104,15 +104,15 @@ fi
 ##################################################
 # Set properties file if not already provided
 ##################################################
-#if [ -z "$PROPERTIES_FILE" ]
-#then
-#  if [ -f "$VUFIND_LOCAL_DIR/import/import.properties" ]
-#  then
-#    PROPERTIES_FILE="$VUFIND_LOCAL_DIR/import/import.properties"
-#  else
-#    PROPERTIES_FILE="$VUFIND_HOME/import/import.properties"
-#  fi
-#fi
+if [ -z "$PROPERTIES_FILE" ]
+then
+if [ -f "$VUFIND_LOCAL_DIR/import/import.properties" ]
+then
+PROPERTIES_FILE="$VUFIND_LOCAL_DIR/import/import.properties"
+else
+PROPERTIES_FILE="$VUFIND_HOME/import/import.properties"
+fi
+fi
 
 ##################################################
 # Set Command Options
@@ -139,7 +139,7 @@ MARC_FILE=`basename $1`
 # Execute Importer
 #####################################################
 
-RUN_CMD="$JAVA $INDEX_OPTIONS -Duser.timezone=UTC -jar $JAR_FILE "org.solrmarc.driver.IndexDriver" -config  resources/marc.properties  -solrURL http://localhost:8080/solr/biblio/update  -solrj lib-solrj-5.5.0 -solrjClassName "org.apache.solr.client.solrj.impl.HttpSolrClient"  $MARC_PATH/$MARC_FILE"
+RUN_CMD="$JAVA $INDEX_OPTIONS -Duser.timezone=UTC -jar $JAR_FILE $PROPERTIES_FILE $MARC_PATH/$MARC_FILE"
 echo "Now Importing $1 ..."
 # solrmarc writes log messages to stderr, write RUN_CMD to the same place
 echo "`date '+%h %d, %H:%M:%S'` $RUN_CMD" >&2
